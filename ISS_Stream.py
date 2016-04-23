@@ -1,7 +1,7 @@
 import datetime,time
 from ISStreamer.Streamer import Streamer
 
-streamer = Streamer(bucket_name="Gemini II Stream", bucket_key="3N5NPXMQ3S37",access_key="ofB7iFb2hjFV0ly6okazknFhLWOYQKG7")
+streamer = Streamer(bucket_name="Gemini II Stream", bucket_key="99UJULWJPVPL",access_key="ofB7iFb2hjFV0ly6okazknFhLWOYQKG7")
 
 
 length=-1
@@ -42,8 +42,8 @@ def convertTime(string):
   time_ = datetime.datetime.now()
   date_time = '%d.%d.%d %d:%d:%d' % (int(time_.day),int(time_.month),int(time_.year),int(string[1]+string[2]),int(string[3]+string[4]),int(string[5]+string[6]))
   pattern = '%d.%m.%Y %H:%M:%S'
-  epoch = int(time.mktime(time.strptime(date_time, pattern)))
-  return epoch
+  Epoch = int(time.mktime(time.strptime(date_time, pattern)))
+  return Epoch
 
 while(1 != 2):
     f = open('DownlinkTelemetryExample.txt') # Need to Find Better way than re-opening file in future!
@@ -90,19 +90,26 @@ while(1 != 2):
             print("DATA INVALID %s COLUMN 11"% str(columns[11]))
             continue
         print("Data Line Read Successfully...Exporting Data")
-        epoch = convertTime(columns[7])
-        streamer.log("GPS Location",[convertGPS(columns[8]),-1*convertGPS(columns[10])],epoch)
+        Epoch = convertTime(columns[7])
+        streamer.log_object([convertGPS(columns[8]),-1*convertGPS(columns[10])],key_prefix="GPS Location",epoch=Epoch)
         print("GPS Location: %s,%s"%(convertGPS(columns[8]),-1*convertGPS(columns[10])))
-        streamer.log("Wind Speed/Hz",int(columns[2]),epoch)
+        streamer.log_object(int(columns[2]),key_prefix="Wind Speed/Hz",epoch=Epoch)
         print("Wind Speed/Hz: %s"%columns[2])
-        streamer.log("Magnetometer",int(columns[3]),epoch)
+        streamer.log_object(int(columns[3]),key_prefix="Magnetometer",epoch=Epoch)
         print("Magnetometer: %s"% columns[3])
-        streamer.log("Accelerometer",int(columns[4]),epoch)
+        streamer.log_object(int(columns[4]),key_prefix="Accelerometer",epoch=Epoch)
         print("Accelerometer: %s"%columns[4])
-        streamer.log("Internal Temperature/Celsius",int(columns[5]),epoch)
+        streamer.log_object(int(columns[5]),key_prefix="Internal Temperature/Celsius",epoch=Epoch)
         print("Internal Temperature/Celsius: %s"%columns[5])
-        streamer.log("Radiation Level/cpm",int(columns[6])*4,epoch)
+        streamer.log_object(int(columns[6])*4,key_prefix="Radiation Level/cpm",epoch=Epoch)
         print("Radiation Level: %d"% int(int(columns[6])*4))
+        
     length = numLines
+    streamer.flush()
+    I = raw_input(" ")
+    if not I:
+        print("Closing Down...")
+        streamer.close()
+        break
     f.close()
     time.sleep(15)	
