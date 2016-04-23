@@ -55,7 +55,7 @@ while(1 != 2):
         line = f.readlines()[-2]
         out_file.write(line)
         columns = line.split(',')
-        if(columns.size() < 12):
+        if(len(columns) < 12):
             print("DATA INVALID: Wrong Column Count")
             continue
         if(checkFormat(str(columns[7]),"$iiiiii.ii") == False):
