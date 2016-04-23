@@ -31,12 +31,12 @@ def checkFormat(string,form):
 
 def convertGPS(string):
     Ndeg = float(string)/1E2
-    print Ndeg
+    print int(Ndeg)
     Nsec = float(string)-int(Ndeg)*1E2
     print Nsec
     Nsec = Nsec/60.
     print Nsec
-    return Ndeg+Nsec
+    return int(Ndeg)+Nsec
     
 def convertTime(string):
   time_ = datetime.datetime.now()
@@ -91,8 +91,8 @@ while(1 != 2):
             continue
         print("Data Line Read Successfully...Exporting Data")
         epoch = convertTime(columns[7])
-        streamer.log("GPS Location",[convertGPS(columns[8]),convertGPS(columns[10])],epoch)
-        print("GPS Location: %s,%s"%(convertGPS(columns[8]),convertGPS(columns[10])))
+        streamer.log("GPS Location",[convertGPS(columns[8]),-1*convertGPS(columns[10])],epoch)
+        print("GPS Location: %s,%s"%(convertGPS(columns[8]),-1*convertGPS(columns[10])))
         streamer.log("Wind Speed/Hz",int(columns[2]),epoch)
         print("Wind Speed/Hz: %s"%columns[2])
         streamer.log("Magnetometer",int(columns[3]),epoch)
@@ -104,4 +104,5 @@ while(1 != 2):
         streamer.log("Radiation Level/cpm",int(columns[6])*4,epoch)
         print("Radiation Level: %d"% int(int(columns[6])*4))
     length = numLines
-    f.close()	
+    f.close()
+    time.sleep(15)	
