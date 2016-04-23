@@ -44,8 +44,8 @@ def convertTime(string):
   time_ = datetime.datetime.now()
   date_time = '%d.%d.%d %d:%d:%d' % (int(time_.day),int(time_.month),int(time_.year),int(string[1]+string[2]),int(string[3]+string[4]),int(string[5]+string[6]))
   pattern = '%d.%m.%Y %H:%M:%S'
-  Epoch = int(time.mktime(time.strptime(date_time, pattern)))
-  return Epoch
+  Epoch_ = int(time.mktime(time.strptime(date_time, pattern)))
+  return Epoch_
 
 while(1 != 2):
     f = open('C:\Users\gxk928\dl-fldigi.files\dl-fldigi20160423.log')
