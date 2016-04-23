@@ -3,7 +3,7 @@ Project Gemini Script for Initial State
 
 ## Requirements
 
-You will need to obtain an [Initial State]('http://www.initialstate.com') account, this can either be a free or a premium account. Within the site create a new data stream and replace the information in the line:
+You will need to obtain an [Initial State](http://www.initialstate.com) account, this can either be a free or a premium account. Within the site create a new data stream and replace the information in the line:
 
 <code>streamer = Streamer(bucket_name="YourBucketID", bucket_key="YourBucketKey",access_key="YouAPIKey")</code>
 
