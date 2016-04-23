@@ -1,8 +1,9 @@
 import datetime,time
 from ISStreamer.Streamer import Streamer
 
-streamer = Streamer(bucket_name="Gemini II Stream", bucket_key="99UJULWJPVPL",access_key="ofB7iFb2hjFV0ly6okazknFhLWOYQKG7")
+streamer = Streamer(bucket_name="Gemini II Stream Test", bucket_key="Testing",access_key="F36bpJ1QIdOxsVhZNvqiwnSIYDV9Utyv")
 
+out_file = open('C:\Users\gxk928\dl-fldigi.files\GEMINI_%s_data.bkup' % time.time(),'w')
 
 length=-1
 
@@ -46,12 +47,13 @@ def convertTime(string):
   return Epoch
 
 while(1 != 2):
-    f = open('DownlinkTelemetryExample.txt') # Need to Find Better way than re-opening file in future!
+    f = open('C:\Users\gxk928\dl-fldigi.files\dl-fldigi20160423.log')
     numLines = len(f.readlines())
     if(numLines > length):
 	f.seek(0)
         length = numLines
-        line = f.readlines()[-1]
+        line = f.readlines()[-2]
+        out_file.write(line)
         columns = line.split(',')
         if(columns.size() < 12):
             print("DATA INVALID: Wrong Column Count")
@@ -117,6 +119,8 @@ while(1 != 2):
     if not I:
         print("Closing Down...")
         streamer.close()
+        f.close()
+        out_file.close()
         break
     f.close()
-    time.sleep(15)	
+    time.sleep(35)	
