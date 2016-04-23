@@ -55,7 +55,8 @@ while(1 != 2):
         length = numLines
         line = f.readlines()[-2]
         out_file.write(line)
-        columns = line.split(',')
+        Main_Col = line.split(':')
+        columns = Main_Col[-1].split(',')
         if(len(columns) >= 8):
             if(checkFormat(str(columns[7]),"$iiiiii.ii") == False):
                 print("DATA INVALID %s COLUMN 7"% str(columns[7]))
