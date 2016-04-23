@@ -6,6 +6,7 @@ streamer = Streamer(bucket_name="Gemini II Stream Test", bucket_key="Testing",ac
 out_file = open('C:\Users\gxk928\dl-fldigi.files\GEMINI_%s_data.bkup' % time.time(),'w')
 
 length=-1
+Epoch = 0
 
 def checkFormat(string,form):
   if(len(string) != len(form)):
