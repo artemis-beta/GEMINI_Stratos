@@ -53,6 +53,9 @@ while(1 != 2):
         length = numLines
         line = f.readlines()[-1]
         columns = line.split(',')
+        if(columns.size() < 12):
+            print("DATA INVALID: Wrong Column Count")
+            continue
         if(checkFormat(str(columns[7]),"$iiiiii.ii") == False):
             print("DATA INVALID %s COLUMN 7"% str(columns[7]))
             
